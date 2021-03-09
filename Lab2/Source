@@ -1,0 +1,563 @@
+#include "pch.h"
+#include "CppUnitTest.h"
+#include <sstream>
+#include <iostream>
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace std;
+
+namespace UnitTest1
+{
+	TEST_CLASS(UnitTest1)
+	{
+	public:
+		
+		TEST_METHOD(InputTest)
+		{
+			double a_in = 2, b_in =3.4;
+			double a, b, c, d, e, f;
+			stringstream in1;
+			in1 << a_in;
+			in1 >> a;
+			Assert::AreEqual(a_in, a);
+			stringstream in2;
+			in2 << b_in;
+			in2 >> b;
+			Assert::AreEqual(b_in, b);
+			stringstream in3;
+			in3 << "dsdasa $3fff";
+			in3 >> c;
+			stringstream in4;
+			in4 << '%##@';
+			in4 >> d;
+			stringstream in5;
+			in5 << "$";
+			in5 >> e;
+			stringstream in6;
+			in6 << "1.2.22";
+			in6 >> f;
+			Assert::Fail(L"Allow to enter wrong value");
+
+		}
+
+		TEST_METHOD(Output_5)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if ((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0))
+									{
+										i++;
+										cout << '5';
+										Assert::AreEqual(0.0, a); Assert::AreEqual(0.0, b); Assert::AreEqual(0.0, c);
+										Assert::AreEqual(0.0, d); Assert::AreEqual(0.0, e); Assert::AreEqual(0.0, f);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i != 1) Assert::Fail(L"Out of reach");
+		}
+
+		TEST_METHOD(Output_2)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) && ((a * d - c * b != 0) && (e * d - b * f != 0) || (a * f - c * e != 0)))
+									{
+										i++;
+										double y = (a * f - c * e) / (a * d - c * b);
+										double x = (d * e - b * f) / (d * a - b * c);
+										cout << "2 " << x << ' ' << y;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+			double a1 = 7, b1 = -4, c1 = 1, d1 = 12, e1 = 2, f1 = 6;
+			double y = (a1 * f1 - c1 * e1) / (a1 * d1 - c1 * b1);
+			Assert::AreEqual((double)5 / 11, y);
+			double x = (d1 * e1 - b1 * f1) / (d1 * a1 - b1 * c1);
+			Assert::AreEqual((double)6 / 11, x);
+		}
+
+		TEST_METHOD(Output_4_Case_1)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										(((a == 0 && b == 0 && e == 0 && d != 0 && c == 0) ||
+											(c == 0 && d == 0 && f == 0 && b != 0 && a == 0)))
+
+										)
+									{
+										i++;
+										double y = -1234;
+										if (b == 0)
+											y = f / d;
+										else if (d == 0)
+											y = e / b;
+										else if (e == 0 || f == 0)
+											y = 0;
+										if (y == -1234) Assert::Fail(L"Dont handle all cases");
+										else cout << '4' << ' ' << y;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+			double y = 0, f1 = 6, d1 = 12, b1 = 0, e1 = 0;
+			if (b1 == 0)
+				y = f1 / d1;
+			else if (d1 == 0)
+				y = e1 / b1;
+			else if (e1 == 0 || f1 == 0)
+				y = 0;
+			Assert::AreEqual((double)1 / 2, y);
+		}
+
+		TEST_METHOD(Output_3_Case_1)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+										(a == 0 && c == 0 && e / b != f / d) ||
+										(b == 0 && d == 0 && e / a != f / c) ||
+										(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(((a == 0 && b == 0 && e == 0 && c != 0 && d == 0) ||
+											(c == 0 && d == 0 && f == 0 && a != 0 && b == 0))) &&
+										(((a == 0 && b == 0 && e == 0 && d != 0 && c == 0) ||
+											(c == 0 && d == 0 && f == 0 && b != 0 && a == 0)))
+										)
+									{
+										i++;
+										double x = -1234;
+										if (a == 0)
+											x = f / c;
+										else if (c == 0)
+											x = e / a;
+										else if (e == 0 || f == 0)
+											x = 0;
+										if (x == -1234) Assert::Fail(L"Dont handle all cases");
+										cout << '3' << ' ' << x;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+			double x = 0, a1 = 0,b1 = 0, c1 = 1, d1 = 0, e1 = 0,f1 = 6;
+			if (a1 == 0)
+				x = f1 / c1;
+			else if (d1 == 0)
+				x = e1 / a1;
+			else if (e1 == 0 || f1 == 0)
+				x = 0;
+			Assert::AreEqual((double)6, x);
+		}
+
+		TEST_METHOD(Output_0)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(((a == 0 && b == 0 && e == 0 && c != 0 && d == 0) ||
+											(c == 0 && d == 0 && f == 0 && a != 0 && b == 0))) &&
+										!(((a == 0 && b == 0 && e == 0 && d != 0 && c == 0) ||
+											(c == 0 && d == 0 && f == 0 && b != 0 && a == 0)))
+										)
+									{
+										i++;
+										cout << '0'; 
+										
+										if (a == c && b == d && e == f) 
+											Assert::Fail(L"(x,1-x)");
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+		}
+
+		TEST_METHOD(Output_4_Case_2)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										(a == 0 && c == 0)
+										)
+									{
+										i++;
+										double y = -1234;
+										if (e == 0)
+											y = f / d;
+										else if (f == 0)
+											y = e / b;
+										else
+											y = e / b;
+										if (y == -1234) Assert::Fail(L"Dont handle all cases");
+										else cout << '4' << ' ' << y;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+			double y = 0, f1 = 21, d1 = 7, b1 = 2, e1 = 6;
+			if (e1 == 0)
+				y = f1 / d1;
+			else if (f1 == 0)
+				y = e1 / b1;
+			else
+				y = e1 / b1;
+			Assert::AreEqual((double)3, y);
+		}
+
+		TEST_METHOD(Output_3_Case_2)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(a == 0 && c == 0) &&
+										(b == 0 && d == 0)
+										)
+									{
+										i++;
+										double x = -1234;
+										if (e == 0)
+											x = f / c;
+										else if (f == 0)
+											x = e / a;
+										else
+											x = e / a;
+										if (x == -1234) Assert::Fail(L"Dont handle all cases");
+										cout << '3' << ' ' << x;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+			double x = 0, f1 = 21, d1 = 0, b1 = 0, e1 = 6,c1 = 7, a1 = 2;
+			if (e1 == 0)
+				x = f1 / c1;
+			else if (f1 == 0)
+				x = e1 / a1;
+			else
+				x = e1 / a1;
+			Assert::AreEqual((double)3, x);
+		}
+
+		TEST_METHOD(Output_1_Case_1)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(a == 0 && c == 0) &&
+										!(b == 0 && d == 0) &&
+										(b == 0 && e == 0)
+										)
+									{
+										i++;
+										double y = (a * f - c * e) / (a * d - c * b);
+										double x = (d * e - b * f) / (d * a - b * c);
+										if ((double)y != (double)INFINITY && (double)x != (double)INFINITY && !(a == c && b == d && e == f)) Assert::Fail(L"Wrong conditions");
+										double k, n;
+										k = -c / d;
+										n = f / d;
+										cout << '1' << ' ' << k << ' ' << n;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+		}
+
+
+		TEST_METHOD(Output_1_Case_2)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(a == 0 && c == 0) &&
+										!(b == 0 && d == 0) &&		
+										!(b == 0 && e == 0) &&
+										(d == 0 && f == 0)
+										)
+									{
+										i++;
+										double y = (a * f - c * e) / (a * d - c * b);
+										double x = (d * e - b * f) / (d * a - b * c);
+										if ((double)y != (double)INFINITY && (double)x != (double)INFINITY && !(a == c && b == d && e == f)) Assert::Fail(L"Wrong conditions");
+										double k, n;
+										k = -a / b;
+										n = e / b;
+										cout << '1' << ' ' << k << ' ' << n;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+		}
+
+
+		TEST_METHOD(Output_1_Case_3)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(a == 0 && c == 0) &&
+										!(b == 0 && d == 0) &&
+										!(b == 0 && e == 0) &&
+										!(d == 0 && f == 0) &&
+										(a == 0 && e == 0)
+										)
+									{
+										i++;
+										double y = (a * f - c * e) / (a * d - c * b);
+										double x = (d * e - b * f) / (d * a - b * c);
+										if ((double)y != (double)INFINITY && (double)x != (double)INFINITY && !(a == c && b == d && e == f)) Assert::Fail(L"Wrong conditions");
+										double k, n;
+										k = -d / c;
+										n = f / c;
+										cout << '1' << ' ' << k << ' ' << n;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+		}
+
+
+		TEST_METHOD(Output_1_Case_4)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(a == 0 && c == 0) &&
+										!(b == 0 && d == 0) &&
+										!(b == 0 && e == 0) &&
+										!(d == 0 && f == 0) &&
+										!(a == 0 && e == 0) &&
+										(c == 0 && f == 0)
+										)
+									{
+										i++;
+										double y = (a * f - c * e) / (a * d - c * b);
+										double x = (d * e - b * f) / (d * a - b * c);
+										if ((double)y != (double)INFINITY && (double)x != (double)INFINITY && !(a == c && b == d && e == f)) Assert::Fail(L"Wrong conditions");
+										double k, n;
+										k = -d / c;
+										n = f / c;
+										cout << '1' << ' ' << k << ' ' << n;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+		}
+
+		TEST_METHOD(Output_1_Case_5)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(a == 0 && c == 0) &&
+										!(b == 0 && d == 0) &&
+										!(b == 0 && e == 0) &&
+										!(d == 0 && f == 0) &&
+										!(a == 0 && e == 0) &&
+										!(c == 0 && f == 0) &&
+										(a / b == c / d)
+										)
+									{
+										i++;
+										double y = (a * f - c * e) / (a * d - c * b);
+										double x = (d * e - b * f) / (d * a - b * c);
+										if ((double)y != (double)INFINITY && (double)x != (double)INFINITY && !(a==c && b==d && e==f)) Assert::Fail(L"Wrong conditions");
+										double k, n;
+										k = -d / c;
+										n = f / c;
+										cout << '1' << ' ' << k << ' ' << n;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i < 1) Assert::Fail(L"Out of reach");
+		}
+
+		TEST_METHOD(Output_End)
+		{
+			int i = 0;
+			for (double a = -5; a < 6; a++) {
+				for (double b = -5; b < 6; b++) {
+					for (double c = -5; c < 6; c++) {
+						for (double d = -5; d < 6; d++) {
+							for (double e = -5; e < 6; e++) {
+								for (double f = -5; f < 6; f++) {
+									if (!((a == 0) && (b == 0) && (c == 0) && (d == 0) && (e == 0) && (f == 0)) &&
+										!((a * d - c * b != 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) &&
+										!(((a * d - c * b == 0) && ((e * d - b * f != 0) || (a * f - c * e != 0))) ||
+											(a == 0 && c == 0 && e / b != f / d) ||
+											(b == 0 && d == 0 && e / a != f / c) ||
+											(a == 0 && b == 0 && c == 0 && d == 0 && (e / f > 0))) &&
+										!(a == 0 && c == 0) &&
+										!(b == 0 && d == 0) &&
+										!(b == 0 && e == 0) &&
+										!(d == 0 && f == 0) &&
+										!(a == 0 && e == 0) &&
+										!(c == 0 && f == 0) &&
+										!(a / b == c / d)
+										)
+									{
+										i++;
+										cout << "Are you kidding me?";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (i > 0) Assert::Fail(L"Conditions dont handle all cases");
+		}
+	};
+}
